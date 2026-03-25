@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 
-export function useIntersectionObserver(options = {}) {
+export function useIntersectionObserver({
+  threshold = 0.15,
+  rootMargin = '0px',
+  triggerOnce = true,
+} = {}) {
   const ref = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
 
@@ -12,16 +16,19 @@ export function useIntersectionObserver(options = {}) {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
-          // Once visible, stop observing (animations play once)
-          observer.unobserve(element)
+          if (triggerOnce) {
+            observer.unobserve(element)
+          }
+        } else if (!triggerOnce) {
+          setIsVisible(false)
         }
       },
-      { threshold: 0.15, ...options }
+      { threshold, rootMargin }
     )
 
     observer.observe(element)
     return () => observer.disconnect()
-  }, [])
+  }, [threshold, rootMargin, triggerOnce])
 
   return [ref, isVisible]
 }

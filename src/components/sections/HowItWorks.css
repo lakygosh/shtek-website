@@ -1,0 +1,103 @@
+/* ─── HowItWorks Section ─── */
+.hiw__header {
+  margin-bottom: var(--space-12);
+}
+
+.hiw__steps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  position: relative;
+}
+
+.hiw__line {
+  display: none;
+}
+
+.hiw__step {
+  flex: 1;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hiw__num-ring {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  box-shadow: 0 0 20px var(--accent-dim);
+  flex-shrink: 0;
+}
+
+.hiw__num {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.hiw__icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.hiw__title {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.hiw__desc {
+  font-size: var(--text-body-sm);
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: 280px;
+}
+
+/* ─── Desktop: horizontal 3-column ─── */
+@media (min-width: 1024px) {
+  .hiw__steps {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-10);
+  }
+
+  .hiw__line {
+    display: block;
+    position: absolute;
+    top: 28px;
+    left: 15%;
+    width: 70%;
+    height: 4px;
+    pointer-events: none;
+  }
+
+  .hiw__line-fill {
+    stroke-dasharray: 1600;
+    stroke-dashoffset: 1600;
+  }
+
+  .visible .hiw__line-fill {
+    animation: drawLine 1.5s ease 0.3s forwards;
+  }
+
+  .hiw__step {
+    max-width: 280px;
+  }
+}

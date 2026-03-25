@@ -1,0 +1,39 @@
+/* ─── Badge Component ─── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.badge--free {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.badge--beta {
+  background: var(--info-dim);
+  color: var(--info);
+}
+
+.badge--new {
+  background: var(--secondary-dim);
+  color: var(--secondary);
+}
+
+.badge--premium {
+  background: var(--gold-dim);
+  color: var(--gold);
+}
+
+.badge--coming-soon {
+  background: var(--info-dim);
+  color: var(--info);
+}

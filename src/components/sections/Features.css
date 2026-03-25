@@ -1,0 +1,448 @@
+/* ─── Features Section ─── */
+/* Mobile-first */
+
+.features {
+  padding: var(--space-16) 0;
+}
+
+/* Header */
+.features__header {
+  margin-bottom: var(--space-8);
+}
+
+/* Tab bar — horizontal scrollable pills on mobile */
+.features__tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-10);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: var(--space-2);
+  /* Fade gradient on edges */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black var(--space-4),
+    black calc(100% - var(--space-8)),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black var(--space-4),
+    black calc(100% - var(--space-8)),
+    transparent 100%
+  );
+}
+.features__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.features__tab {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.features__tab:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+.features__tab--active {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.features__tab:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* Feature panel — mobile: mock above text, stacked */
+.features__panel {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  animation: fadeIn 0.3s ease both;
+}
+
+.features__mock {
+  order: -1; /* Mock above text on mobile */
+}
+
+.features__text {
+  text-align: center;
+}
+
+.features__tagline {
+  font-size: var(--text-h2);
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin-bottom: var(--space-3);
+}
+
+.features__desc {
+  color: var(--text-muted);
+  font-size: var(--text-body);
+  line-height: 1.7;
+  margin-bottom: var(--space-5);
+}
+
+.features__bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  align-items: center;
+}
+.features__bullets li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-body-sm);
+  color: var(--text-muted);
+}
+
+.features__cta {
+  margin-top: var(--space-2);
+}
+
+/* ─── Tablet (768px) ─── */
+@media (min-width: 768px) {
+  .features {
+    padding: var(--space-20) 0;
+  }
+
+  .features__tabs {
+    justify-content: center;
+    overflow-x: visible;
+    mask-image: none;
+    -webkit-mask-image: none;
+    flex-wrap: wrap;
+  }
+
+  .features__tab {
+    padding: var(--space-2) var(--space-6);
+    font-size: 0.9rem;
+  }
+}
+
+/* ─── Desktop (1024px) ─── */
+@media (min-width: 1024px) {
+  .features {
+    padding: 100px 0;
+  }
+
+  .features__panel {
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--space-12);
+    align-items: center;
+    min-height: 360px;
+  }
+
+  .features__mock {
+    order: 1; /* Mock on right side on desktop */
+  }
+
+  .features__text {
+    text-align: left;
+    order: 0;
+  }
+
+  .features__bullets {
+    align-items: flex-start;
+  }
+}
+
+/* ─── Feature Mock Styles (shared) ─── */
+/* These were in index.css — now co-located with Features */
+
+.fmock {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: var(--space-5);
+}
+
+.fmock-row {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.fmock-stat-card {
+  flex: 1;
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.fmock-label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.fmock-val {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+.fmock-val.accent { color: var(--accent); }
+.fmock-val.secondary { color: var(--secondary); }
+.fmock-val.info { color: var(--info); }
+.fmock-val.error { color: var(--error); }
+
+/* Shared progress track */
+.fmock-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.fmock-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: var(--accent);
+  transition: width 0.8s var(--transition-slow);
+}
+
+/* Dashboard mock specifics */
+.fmock-savings-bar { margin-bottom: var(--space-3); }
+.fmock-savings-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  margin-bottom: var(--space-1);
+}
+.fmock-savings-header .fmock-val { font-size: 0.85rem; }
+.fmock-goals-row { gap: var(--space-2); }
+.fmock-goal-chip {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.fmock-goal-chip span { font-size: 1rem; }
+.fmock-mini-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.fmock-mini-bar div {
+  height: 100%;
+  background: var(--info);
+  border-radius: 10px;
+}
+
+/* Daily Log mock */
+.fmock-daily-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+.fmock-mini-donut {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fmock-mini-donut-total {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.fmock-currency-badge {
+  padding: var(--space-1) var(--space-3);
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+.fmock-entry-list { display: flex; flex-direction: column; gap: 2px; }
+.fmock-entry {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--radius-sm);
+  animation: slideEntry 0.4s var(--transition-slow) both;
+}
+.fmock-entry:hover { background: rgba(255, 255, 255, 0.02); }
+.fmock-entry-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.fmock-entry-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+}
+.fmock-entry-cat { font-size: 0.7rem; color: var(--text-dim); }
+.fmock-entry-amt {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Budget mock */
+.fmock-budget { display: flex; flex-direction: column; gap: 2px; }
+.fmock-budget-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  animation: slideEntry 0.4s var(--transition-slow) both;
+}
+.fmock-budget-row:hover { background: rgba(255, 255, 255, 0.02); }
+.fmock-budget-name {
+  flex: 1;
+  font-size: 0.85rem;
+}
+.fmock-badge {
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.65rem;
+  font-weight: 500;
+  background: color-mix(in srgb, var(--badge-c) 15%, transparent);
+  color: var(--badge-c);
+  white-space: nowrap;
+}
+.fmock-budget-freq {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  min-width: 60px;
+  display: none;
+}
+.fmock-budget-amt {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  min-width: 50px;
+  text-align: right;
+}
+.fmock-budget-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-2) var(--space-1);
+  margin-top: var(--space-2);
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Goals mock */
+.fmock-goals { display: flex; flex-direction: column; gap: var(--space-2); }
+.fmock-goal-card {
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  animation: fadeInUp 0.4s var(--transition-slow) both;
+}
+.fmock-goal-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+.fmock-goal-icon { font-size: 1.4rem; }
+.fmock-goal-top div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.fmock-goal-name { font-size: 0.85rem; font-weight: 500; }
+.fmock-goal-tmpl { font-size: 0.7rem; color: var(--text-dim); }
+.fmock-goal-pct {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Ideal Life mock */
+.fmock-ideal-bars { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4); }
+.fmock-ideal-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  animation: fadeInUp 0.4s var(--transition-slow) both;
+}
+.fmock-ideal-cat {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  min-width: 70px;
+}
+.fmock-ideal-track { flex: 1; }
+.fmock-ideal-val {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  min-width: 50px;
+  text-align: right;
+}
+.fmock-ideal-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+.fmock-ideal-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+.fmock-ideal-stat .fmock-val { font-size: 1rem; }
+
+/* ─── Mock responsive tweaks ─── */
+@media (min-width: 480px) {
+  .fmock-budget-freq {
+    display: block;
+  }
+  .fmock-ideal-summary {
+    flex-direction: row;
+    gap: var(--space-3);
+  }
+}
+
+@media (min-width: 768px) {
+  .fmock-budget-row {
+    flex-wrap: nowrap;
+  }
+}

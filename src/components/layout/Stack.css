@@ -1,0 +1,33 @@
+/* ─── Stack Component ─── */
+.stack {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.stack--vertical {
+  flex-direction: column;
+}
+
+.stack--horizontal {
+  flex-direction: row;
+}
+
+.stack--wrap {
+  flex-wrap: wrap;
+}
+
+/* Gap variants */
+.stack--gap-xs { gap: var(--space-1); }
+.stack--gap-sm { gap: var(--space-2); }
+.stack--gap-md { gap: var(--space-4); }
+.stack--gap-lg { gap: var(--space-6); }
+.stack--gap-xl { gap: var(--space-10); }
+.stack--gap-2xl { gap: var(--space-16); }
+.stack--gap-none { gap: 0; }
+
+/* Responsive: horizontal → vertical on mobile */
+@media (max-width: 767px) {
+  .stack--responsive {
+    flex-direction: column;
+  }
+}

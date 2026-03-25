@@ -1,0 +1,54 @@
+/* ─── Manifesto Section ─── */
+.manifesto {
+  position: relative;
+  padding: var(--space-20) var(--space-5);
+  text-align: center;
+  overflow: hidden;
+}
+
+.manifesto__bg {
+  position: absolute;
+  inset: -50%;
+  background:
+    radial-gradient(ellipse 600px 400px at 30% 50%, rgba(143, 185, 150, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 400px at 70% 50%, rgba(212, 197, 169, 0.04) 0%, transparent 70%);
+  background-size: 200% 200%;
+  animation: gradientMove 25s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.manifesto__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.manifesto__quote {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.manifesto__text {
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.5px;
+  margin-bottom: var(--space-10);
+}
+
+.manifesto__text em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+/* ─── Desktop ─── */
+@media (min-width: 1024px) {
+  .manifesto {
+    padding: 120px var(--space-10);
+  }
+}

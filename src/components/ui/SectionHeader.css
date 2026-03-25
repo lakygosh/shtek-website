@@ -1,0 +1,23 @@
+/* ─── SectionHeader Component ─── */
+.section-header {
+  margin-bottom: var(--space-12);
+}
+
+.section-header--centered {
+  text-align: center;
+}
+
+.section-header__title {
+  font-size: var(--text-h1);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  margin-bottom: var(--space-2);
+  color: var(--text);
+}
+
+.section-header__subtitle {
+  color: var(--text-muted);
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+}

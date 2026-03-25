@@ -1,0 +1,1473 @@
+---
+# Sprint Status & Roadmap — Shtek Website Redesign
+# Author: Bob (Scrum Master)
+# Date: 2026-03-25
+# Version: 1.0
+# Purpose: Master sequencing of all work across 6 sprints + pre-launch baseline capture
+
+project: shtek-website-redesign
+total_epics: 4
+total_stories: 24
+canonical_page_order:
+  - Navbar
+  - Hero
+  - TrustBar
+  - Features
+  - HowItWorks
+  - IdealLifePromo
+  - Testimonials
+  - Comparison
+  - Pricing
+  - FAQ
+  - About
+  - Privacy
+  - Manifesto
+  - FinalCTA
+  - Footer
+
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# PRE-SPRINT: Baseline Capture (Must Happen Before Sprint 1 Begins)
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+baseline:
+  story_id: "0.1"
+  title: "Capture analytics baseline & current performance metrics"
+  epic: "Pre-Launch Prep"
+  priority: P0
+  complexity: S
+  status: todo
+  owner: ""
+  due: Before Sprint 1
+  description: |
+    Capture baseline metrics before ANY implementation changes to enable post-launch measurement 
+    of PRD success metrics (bounce rate -20%, time on page +40%, CTA CTR +50%). This must happen 
+    first so that post-launch deltas are meaningful.
+  
+  acceptance_criteria:
+    - Lighthouse Mobile & Desktop scores captured and recorded
+    - Current traffic baseline (sessions, avg session duration, bounce rate) recorded
+    - Current CTA click-through rate (to app.shtek.me) recorded
+    - Analytics tool (Plausible or Fathom) instrumented with UTM parameters
+    - All baseline metrics stored in project documentation for post-launch comparison
+  
+  blockers:
+    - Q7: Analytics tool choice (Plausible recommended to avoid GDPR cookie banner)
+    - Requires Rajko decision on GA4 vs Plausible vs Fathom
+  
+  dependencies: []
+  
+  definition_of_done:
+    - Baseline screenshot/report exported to BRAIN/metrics/
+    - Analytics script deployed to staging
+    - UTM parameter scheme tested (links to app.shtek.me working)
+
+---
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# SPRINT 1: Foundation & Design System (Epic 1)
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+sprint_1:
+  name: "Foundation & Design System"
+  epic: "Epic 1"
+  goal: |
+    Establish the shared design infrastructure (CSS tokens, reusable components, responsive grid, 
+    animation utilities) that all subsequent epics depend on. This sprint is a technical enabler — 
+    shipping Sprint 1 unblocks parallel work on Epics 2 and 3.
+  
+  sprint_duration: "2 weeks"
+  velocity_target: 18 points (4S + 1M)
+  
+  stories:
+    
+    - story_id: "1.1"
+      title: "Set up CSS custom properties (design tokens)"
+      complexity: S
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Implement the full CSS token system covering colors, typography, spacing, and radius tokens.
+        This extends the existing :root variables in src/index.css with new semantic tokens from the 
+        UX Design Spec. Also includes directory restructuring and font self-hosting setup (was ADR-05).
+      
+      acceptance_criteria:
+        - All color tokens present: --bg-base, --bg-elevated, --bg-card, --bg-input, --bg-overlay, 
+          --border-subtle, --border-default, --border-hover, --border-focus, --text-primary, 
+          --text-secondary, --text-muted, --text-dim, --text-disabled, --accent, --accent-light, 
+          --accent-dim, --accent-glow, --accent-surface, --secondary, --secondary-dim, 
+          --secondary-surface, --info, --info-dim, --error, --error-dim, --gold, --gold-dim
+        - Spacing tokens present: --space-1 through --space-24 (4px increments)
+        - Border radius tokens present: --radius-xs, --radius-sm, --radius, --radius-lg, 
+          --radius-xl, --radius-full
+        - Typography tokens present: --max-width, --max-width-text, --max-width-narrow
+        - DM Sans (400, 500, 600, 700) and DM Mono (400, 500) self-hosted as WOFF2 files 
+          in public/fonts/ with @font-face declarations using font-display: swap
+        - Google Fonts CDN link removed from index.html
+        - Existing color variables preserved for backward compatibility
+        - Directory structure created: src/components/ui/, src/components/layout/, 
+          src/components/sections/, src/components/mocks/, src/data/, src/hooks/, src/utils/
+      
+      blockers: []
+      
+      dependencies: []
+      
+      definition_of_done:
+        - All tokens render correctly in browser (inspect :root computed styles)
+        - Fonts load with swap strategy (no FOIT, no FOUT)
+        - Font files bundled in dist/fonts/
+        - All imports in other components resolve
+    
+    
+    - story_id: "1.2"
+      title: "Create shared components (Button, Card, Section, Badge, Accordion)"
+      complexity: M
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Build the core shared component library as React components with co-located CSS. These are 
+        primitive building blocks used across multiple sections. Components: Button (variants: primary, 
+        secondary/ghost, outline-accent, icon; sizes: default, lg, xl; full-width prop), Card (variants: 
+        standard, feature, pricing, testimonial, stat; hover behavior), Section (intersection observer 
+        wrapper), Badge (free, beta, new, premium), Accordion (single/group variants, keyboard accessible).
+      
+      acceptance_criteria:
+        - Button component renders all variants and sizes; applies correct token colors; 
+          has minimum 44px touch target; implements shimmer animation
+        - Card component renders all variants; features variant has accent border + glow; 
+          pricing featured has accent surface background
+        - Badge component renders all variants; free badge uses accent-dim background
+        - Section wrapper component renders with useIntersectionObserver hook; 
+          applies .visible class when 15% in viewport
+        - Accordion component: single/group toggle modes; chevron rotation; smooth height animation; 
+          aria-expanded + aria-controls attributes set correctly; keyboard operable (Enter/Space/Escape)
+        - All components accept children and style props
+        - CSS modules or scoped styles (not global class pollution)
+        - Focus indicators use --border-focus color
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1 (design tokens must exist)"
+      
+      definition_of_done:
+        - All components render without console errors
+        - Storybook or visual regression test suite created (optional but recommended)
+        - All components tested in mobile (375px) and desktop (1024px+) viewports
+    
+    
+    - story_id: "1.3"
+      title: "Implement mobile-first responsive grid/layout system"
+      complexity: S
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Define the responsive layout utilities using CSS Grid and Flexbox with consistent breakpoints.
+        Codify breakpoint values (320px, 480px, 768px, 1024px, 1440px) as CSS custom properties.
+        Create layout helper classes for column patterns used across the site: 1-col → 2-col → 3-col, 
+        hero split (1fr 1fr), features split (1fr 1.2fr), 4-col footer.
+      
+      acceptance_criteria:
+        - Breakpoint variables defined: --bp-xs (320px), --bp-sm (480px), --bp-md (768px), 
+          --bp-lg (1024px), --bp-xl (1440px)
+        - All media queries use min-width (mobile-first, never max-width)
+        - 2-col grid pattern: 1-col at 375px, 2-col at 768px+, full-width with no overflow at 375px
+        - Hero split layout: vertical stack at 375px, 1fr 1fr side-by-side at 1024px+
+        - Features split layout: 1-col at 375px (mock above text), 1fr 1.2fr at 768px+
+        - 4-col footer: stacked at 375px, 2-col at 768px, 4-col at 1024px
+        - All layouts constrained to --max-width (1200px) at 1440px+ with no horizontal scroll
+        - Container component centers content and applies consistent padding at all breakpoints
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1 (spacing tokens via --space-* variables)"
+      
+      definition_of_done:
+        - No horizontal scrollbar at any viewport width (320px–1440px+)
+        - All grid gaps and padding use token variables
+        - Mobile-first CSS migration complete (no max-width queries anywhere)
+    
+    
+    - story_id: "1.4"
+      title: "Set up animation utilities (intersection observer, transitions, hooks)"
+      complexity: S
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Formalize and extend the existing animation system. Add new hooks (useMediaQuery, 
+        useScrollPosition) and keyframes (accordionOpen, counterUp, cardHover). Ensure 
+        prefers-reduced-motion compliance. Document stagger delay pattern (100ms increments).
+      
+      acceptance_criteria:
+        - useIntersectionObserver hook: triggers .visible class at 15% threshold; 
+          no re-triggers (unobserve on first intersection)
+        - useCountUp hook: animates numeric values from 0 to target; 0.8s duration; 
+          ease-out easing; triggered by shouldStart flag
+        - useMediaQuery hook: returns boolean for CSS media queries; used for responsive conditionals
+        - useScrollPosition hook: returns current scroll Y position (throttled to 16ms); 
+          used by Navbar for glass transition
+        - All scroll animations disabled or simplified (≤100ms) when prefers-reduced-motion: reduce
+        - New keyframes: @keyframes accordionOpen, @keyframes counterUp, @keyframes cardHover
+        - All existing keyframes preserved: fadeInUp, fadeIn, scaleIn, shimmer, gradientMove, 
+          barGrow, drawLine, ringDraw, float, pulseGlow, slideEntry
+        - Stagger delay pattern documented: 100-150ms between list items
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1 (tokens for animation values)"
+      
+      definition_of_done:
+        - All hooks exported from src/hooks/
+        - All keyframes tested in the browser
+        - prefers-reduced-motion test: set OS setting, verify animations disable
+    
+    
+    - story_id: "1.5"
+      title: "Complete directory structure and data file scaffolding"
+      complexity: S
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Set up the remaining directory structure and create empty/template data files.
+        Create static data files for sections with substantial content: features.js, testimonials.js, 
+        faq.js, pricing.js, steps.js, trustItems.js, navigation.js. Create utils for CTAUrl pattern 
+        and SEO helpers. Create public/ static files (og-image.png placeholder, sitemap.xml, robots.txt).
+      
+      acceptance_criteria:
+        - All directories from Architecture Section 4.1 created: components/ui/, components/layout/, 
+          components/sections/, components/mocks/, hooks/, data/, utils/
+        - Data files created with placeholder exports: data/features.js, data/testimonials.js, 
+          data/faq.js, data/pricing.js, data/steps.js, data/trustItems.js, data/navigation.js
+        - utils/links.js created with ctaUrl(section) function: returns 
+          "https://app.shtek.me/?utm_source=landing&utm_medium=cta&utm_campaign={section}"
+        - utils/seo.js created with structured data generators (FAQPage, SoftwareApplication schemas)
+        - public/og-image.png placeholder (1200×630) created
+        - public/sitemap.xml template created (will be populated by sprint 4.2)
+        - public/robots.txt template created (will be populated by sprint 4.2)
+        - All imports in App.jsx resolve (no 404 errors)
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1 (directory structure)"
+      
+      definition_of_done:
+        - No import errors in console when app starts
+        - All utility functions exported and importable
+        - Data files have correct structure for their sections
+  
+  definition_of_done:
+    - All 5 stories merged to main
+    - No console errors or warnings
+    - Lighthouse baseline run (metrics captured)
+    - No visual changes to existing sections (if applied to existing codebase)
+    - Ready to unblock Epics 2 and 3 in parallel
+
+---
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# SPRINT 2: Core Section Redesign - Part 1 (Epic 2: Stories 2.1–2.4)
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+sprint_2:
+  name: "Core Section Redesign — Part 1 (Navbar, Hero, TrustBar, Features)"
+  epic: "Epic 2"
+  goal: |
+    Redesign the 4 critical above-the-fold sections (Navbar, Hero, TrustBar, Features) to be 
+    mobile-first and conversion-optimized. These sections have the highest visitor impact and 
+    establish the visual language for the entire site.
+  
+  sprint_duration: "2 weeks"
+  velocity_target: 20 points (2M + 2L)
+  
+  stories:
+    
+    - story_id: "2.1"
+      title: "Redesign Navbar (sticky, mobile hamburger, scroll behavior)"
+      complexity: M
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Implement sticky navigation bar with scroll-triggered glass morphism effect, mobile hamburger 
+        menu, active section highlighting via Intersection Observer. Mobile: 56px tall, logo + hamburger, 
+        slide-down full-width menu. Desktop: logo + nav links + CTA button. Scroll behavior: 
+        transparent → backdrop-blur + border after 80px.
+      
+      acceptance_criteria:
+        - Navbar height: 56px on mobile
+        - Mobile: hamburger icon visible; 3-line to X animation; full-width slide-down menu
+        - Mobile menu: items (Features, How it Works, Pricing, FAQ) with 52px touch targets; 
+          full-width primary CTA at bottom
+        - Desktop: logo, nav links, CTA button in horizontal layout
+        - Scroll behavior: transparent initially, glass morphism (backdrop-filter: blur + border) 
+          after 80px scroll
+        - Active section highlighting: Intersection Observer updates nav link color to --accent
+        - Mobile hamburger menu focus trap: Tab cycles within menu only when open; Escape closes
+        - "Start Free →" CTA links to app.shtek.me with utm_campaign=navbar UTM params
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1, 1.2, 1.3 (design tokens, Button component, responsive grid)"
+      
+      definition_of_done:
+        - Navbar sticky and responsive at 375px, 768px, 1024px viewports
+        - Menu opens/closes smoothly
+        - Focus management tested with keyboard navigation
+        - Scroll trigger works (transparent until 80px)
+        - Active link highlighting works as user scrolls page
+    
+    
+    - story_id: "2.2"
+      title: "Redesign Hero (mobile-first layout, CTAs, animated dashboard)"
+      complexity: L
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Implement the Hero section with mobile-first stacking (text above dashboard), word-by-word 
+        headline animation, primary + secondary CTAs (full-width on mobile), animated dashboard reusing 
+        existing AnimatedDashboard component, micro trust row below CTAs. Desktop: 2-column split 
+        (text left, dashboard right with glow).
+      
+      acceptance_criteria:
+        - Mobile (375px): above-the-fold content includes badge → headline → subtitle → CTAs (stacked) 
+          → AnimatedDashboard (max-width 360px) → micro trust row
+        - Desktop (1024px+): hero-inner grid with 1fr 1fr columns; text left, dashboard right with 
+          accent-glow shadow; min-height: 100vh
+        - Headline animation: word-by-word fadeInUp with 0.1s stagger; subtitle fades at 0.6s; 
+          CTAs at 0.75s; dashboard scales at 0.4s
+        - Primary CTA "Start Planning — It's Free →" links to app.shtek.me with utm_campaign=hero
+        - Secondary CTA "See How It Works" smooth-scrolls to #how-it-works
+        - AnimatedDashboard renders correctly at 375px without clipping or overflow
+        - Micro trust row: 3 items separated by · (Shtek, Free, Made in Serbia)
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1, 1.2, 1.3, 1.4 (tokens, Button component, grid, animations)"
+      
+      definition_of_done:
+        - Hero renders without overflow at all viewports
+        - Animations play correctly (test prefers-reduced-motion too)
+        - AnimatedDashboard mobile performance tested (LCP <2.5s)
+        - Both CTA links verified
+        - Smooth scroll to #how-it-works works
+    
+    
+    - story_id: "2.3"
+      title: "Redesign TrustBar (stat count-up animations, 2×2 mobile grid)"
+      complexity: S
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Implement TrustBar with 4 stat items (beta users, zero tracking, EUR+RSD, Free) that count-up 
+        animate on scroll entry. Mobile: 2×2 grid. Desktop: single flex row. Each item: icon box 
+        (44×44, bg-card border) + monospace stat value + label. Background: bg-elevated with borders.
+      
+      acceptance_criteria:
+        - 4 stat items render with icon containers 44×44px
+        - Count-up animation: values animate from 0 to target over 0.8s ease-out
+        - Stagger delay: 0.15s between each item
+        - Mobile (375px): 2×2 grid layout
+        - Desktop (768px+): single flex row, all items visible
+        - Icons use icon boxes: bg-card background, --border-default border, 44×44px
+        - Stat values use DM Mono font (monospace, 600 weight)
+        - Labels: 0.8rem text-muted color
+        - Section background: bg-elevated with top/bottom borders
+        - Contrast ratios meet ≥4.5:1
+      
+      blockers:
+        - Q2: Current user count for "500+" stat (or omit if unknown)
+      
+      dependencies:
+        - "1.1, 1.2, 1.4 (tokens, Badge/Card components, useCountUp hook)"
+      
+      definition_of_done:
+        - Count-up animations trigger when section enters viewport
+        - All stat items render in correct grid at all viewport sizes
+        - No horizontal overflow at 375px
+        - Monospace font weight and contrast verified
+    
+    
+    - story_id: "2.4"
+      title: "Redesign Features section (mobile tab scroll, feature mocks)"
+      complexity: L
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Implement Features section with horizontal scrollable pill tabs on mobile, tab fadeIn/out panel 
+        transitions, feature mock components (Dashboard, Daily Log, Budget, Goals, Ideal Life) that render 
+        at 375px without overflow. Mobile: mock ABOVE feature text. Desktop: 2-column (text left, mock right). 
+        Tab bar: scroll-snap, auto-scroll active tab into view, right-edge fade gradient. Add "Try It Free →" 
+        CTA below feature panel.
+      
+      acceptance_criteria:
+        - Mobile (375px): horizontal scrollable pill tab bar with no wrapping; tabs 44px minimum height; 
+          right-edge fade gradient indicating overflow
+        - Tab bar: scroll-snap enabled; active tab centered in view on selection
+        - Active tab styling: --accent-dim background, --accent border, --accent text
+        - Feature mock visual appears FIRST (above text) on mobile
+        - Panel content fades in over 0.3s on tab change
+        - All 5 feature mock components (Dashboard, DailyLog, Budget, Goals, IdealLife) render 
+          correctly at 375px without horizontal overflow or broken layout
+        - Desktop (1024px+): 2-column layout (text left, mock right)
+        - "Try It Free →" CTA links to app.shtek.me with utm_campaign=features
+        - Keyboard navigation: Tab/Enter/Arrow keys navigate between tabs
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1, 1.2, 1.3, 1.4 (tokens, Button/Card/Section components, responsive grid, animations)"
+      
+      definition_of_done:
+        - Tab bar scrolls and snaps correctly
+        - All feature mocks render without overflow at 375px
+        - Tab transitions animate smoothly (0.3s fade)
+        - Keyboard navigation works
+        - CTA link verified
+  
+  definition_of_done:
+    - All 4 stories merged to main
+    - No console errors
+    - Mobile-first layout verified at 375px, 768px, 1024px, 1440px
+    - All CTAs tested (links open correct URLs)
+    - Accessibility baseline: keyboard nav + focus indicators visible
+    - Ready for Sprint 3
+
+---
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# SPRINT 3: Core Section Redesign - Part 2 (Epic 2: Stories 2.5–2.8)
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+sprint_3:
+  name: "Core Section Redesign — Part 2 (HowItWorks, Manifesto, FinalCTA, Footer)"
+  epic: "Epic 2"
+  goal: |
+    Complete the core section redesign with the remaining above-the-fold sections (HowItWorks, Manifesto, 
+    FinalCTA) plus the expanded Footer. These sections provide conversion path clarity and final CTAs.
+  
+  sprint_duration: "2 weeks"
+  velocity_target: 18 points (3S + 1M)
+  
+  stories:
+    
+    - story_id: "2.5"
+      title: "Redesign HowItWorks (3-step flow, vertical cards, connector line)"
+      complexity: S
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Implement HowItWorks section with 3 step cards. Mobile: vertical card stack with left 
+        accent border (3px), step number rings (56×56, accent border), stagger animations. Desktop: 
+        horizontal flex with animated SVG connector line (drawLine, 1.5s). Add "Sign Up in 30 
+        Seconds →" CTA below steps.
+      
+      acceptance_criteria:
+        - Mobile: step cards stack vertically with 3px left border in --accent
+        - Step number rings: 56×56px circles, --accent border, DM Mono text centered
+        - Card titles: H3 styling
+        - Card descriptions: Body S (small) text
+        - Stagger animation on scroll: fadeInUp from bottom with 0.15s delays
+        - Desktop (1024px+): flex row layout, animated SVG connector line (drawLine keyframe, 1.5s)
+        - "Sign Up in 30 Seconds →" CTA links to app.shtek.me with utm_campaign=howitworks
+        - No horizontal overflow at any viewport
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1, 1.2, 1.3, 1.4 (tokens, Button component, grid, animations + drawLine keyframe)"
+      
+      definition_of_done:
+        - Step cards render correctly at 375px (vertical) and 1024px+ (horizontal)
+        - Stagger animations trigger on scroll
+        - SVG connector line animates (desktop only)
+        - CTA link verified
+    
+    
+    - story_id: "2.6"
+      title: "Redesign Manifesto (visual elevation, key word highlighted)"
+      complexity: S
+      priority: P1
+      status: todo
+      owner: ""
+      
+      description: |
+        Implement Manifesto section with full-bleed gradient background, centered text (max-width-text), 
+        preserved copy, and accent-highlighted key word. Single fadeInUp animation on scroll entry. 
+        Add CTA "Start Planning →" below. Font: clamp(1.5rem, 3.5vw, 2.2rem), weight 600.
+      
+      acceptance_criteria:
+        - Section background: ambient gradient (different from Hero)
+        - Content: max-width-text (760px) centered
+        - Copy preserved verbatim: "Most apps track where your money went. Shtek helps you decide 
+          where it should go."
+        - Key word highlighted in --accent color
+        - Single fadeInUp animation (not staggered) on scroll entry
+        - Font: clamp(1.5rem, 3.5vw, 2.2rem), weight 600
+        - Mobile (375px): centered text, short punchy lines, full-width CTA
+        - CTA "Start Planning →" links to app.shtek.me with utm_campaign=manifesto
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1, 1.2, 1.3, 1.4 (tokens, Button component, responsive text scaling, animations)"
+      
+      definition_of_done:
+        - Copy preserved and accent-highlighted correctly
+        - Font scaling works across all viewports
+        - Animation plays on scroll
+        - CTA link verified
+    
+    
+    - story_id: "2.7"
+      title: "Redesign FinalCTA (centered layout, strong copy, micro trust bar)"
+      complexity: S
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Implement FinalCTA section with centered layout (max-width 600px), strong headline "Your finances. 
+        Under control. Starting today.", secondary copy "Free. No card. No excuses.", primary XL CTA, 
+        ghost sign-in link, micro trust row (3 items separated by ·: No credit card, Private, Made for EUR & RSD). 
+        ScaleIn animation on scroll entry. Different ambient gradient from Hero/Manifesto.
+      
+      acceptance_criteria:
+        - Center-aligned layout, max-width 600px centered
+        - Headline: "Your finances. Under control. Starting today."
+        - Secondary copy: "Free. No card. No excuses."
+        - Primary CTA: XL size, full-width on mobile, links to app.shtek.me with utm_campaign=final-cta
+        - Ghost sign-in link "Already have an account? Sign in →" links to app.shtek.me sign-in
+        - Micro trust row: 3 items separated by · (No credit card, Private, Made for EUR & RSD)
+        - ScaleIn animation (slight bounce) on scroll entry
+        - Different ambient gradient background from Hero/Manifesto
+        - Mobile: all text centered, CTA full-width
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1, 1.2, 1.3, 1.4 (tokens, Button component, responsive layout, scaleIn keyframe)"
+      
+      definition_of_done:
+        - Layout centered and responsive at all viewports
+        - Both CTA links tested and verified
+        - Micro trust row renders with correct separator
+        - ScaleIn animation plays on scroll
+    
+    
+    - story_id: "2.8"
+      title: "Redesign Footer (4-column layout, all section links)"
+      complexity: S
+      priority: P1
+      status: todo
+      owner: ""
+      
+      description: |
+        Implement expanded 4-column footer: Brand (logo + tagline), Product (Features, How It Works, 
+        Pricing, Download), Company (About, Privacy Policy, Terms of Service), Support (FAQ, Contact, 
+        Feedback). Mobile: stacked columns. Desktop: 4-column grid. Bottom bar: "🇷🇸 Made in Serbia · 
+        Free · © 2026 Shtek". Link styling: 0.85rem text-muted, hover → --accent.
+      
+      acceptance_criteria:
+        - Mobile: columns stack vertically, full-width, first column (Brand) appears first
+        - Desktop (1024px+): 4-column grid with 40px gaps
+        - Column 1 (Brand): logo, tagline
+        - Column 2 (Product): Features, How It Works, Pricing, Download links
+        - Column 3 (Company): About, Privacy Policy, Terms of Service links
+        - Column 4 (Support): FAQ, Contact, Feedback links
+        - Section headings: micro uppercase, text-dim color
+        - Links: 0.85rem, text-muted, hover → --accent color
+        - Bottom bar: "🇷🇸 Made in Serbia · Free · © 2026 Shtek", top border --border-subtle
+        - Internal page links (Features, Pricing, etc.) smooth-scroll to anchors
+        - Privacy Policy and Terms of Service link to their respective pages (see blockers)
+        - All touch targets ≥40px on mobile
+      
+      blockers:
+        - Q6: Privacy Policy URL (where should the link point?)
+        - Terms of Service page does not exist in current scope (PRD Section 10 says out of scope). 
+          Either create a placeholder page or change the footer link to something that exists.
+      
+      dependencies:
+        - "1.1, 1.2, 1.3 (tokens, responsive grid)"
+      
+      definition_of_done:
+        - Footer renders correctly at all viewports
+        - All internal page links smooth-scroll to correct anchors
+        - Touch targets tested ≥40px
+        - Links hover style verified
+  
+  definition_of_done:
+    - All 4 stories merged to main
+    - All 8 existing sections (Navbar → FinalCTA + Footer) now follow mobile-first, design-token-based styling
+    - No console errors
+    - Full page mobile layout tested at 375px (no overflow)
+    - All existing CTAs tested and verified
+    - Ready for Epic 3
+
+---
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# SPRINT 4: New Sections - Part 1 (Epic 3: Stories 3.1–3.3 + Missing 3.x for Ideal Life Promo)
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+sprint_4:
+  name: "New Sections — Part 1 (Testimonials, Pricing, FAQ, Ideal Life Promo)"
+  epic: "Epic 3"
+  goal: |
+    Build 4 of the 6 new sections that address trust and conversion gaps. These sections provide 
+    social proof, pricing transparency, FAQ responses, and a mid-page conversion moment.
+  
+  sprint_duration: "2 weeks"
+  velocity_target: 22 points (2S + 3M)
+  
+  stories:
+    
+    - story_id: "3.0"
+      title: "Build Ideal Life Promo section (mid-page conversion, IdealLifeMock reuse)"
+      complexity: M
+      priority: P0
+      status: todo
+      owner: ""
+      
+      note: |
+        CRITICAL STORY — This was FR-08 in PRD but had no story in original Epic 3. Created during 
+        sprint planning to prevent requirement orphaning. This is a P0 conversion-critical section.
+      
+      description: |
+        Implement the Ideal Life Promo section as a mid-page conversion block. Reuses existing IdealLifeMock 
+        component. Mobile layout: text above mock. Desktop: 2-column (text left, mock right). Headline: 
+        "Create the life you want to live", with emotional, aspirational copy. CTA: "Start Planning — It's Free →" 
+        links to app.shtek.me. Ambient gradient background. ScrollInUp animation on entry.
+      
+      acceptance_criteria:
+        - Section title: "Create the life you want to live"
+        - Copy: emotional, aspirational, focuses on the Ideal Life feature and self-directed financial planning
+        - Mock visual: reuses IdealLifeMock component from components/mocks/IdealLifeMock.jsx
+        - Mobile (375px): text above IdealLifeMock, full-width CTA
+        - Desktop (1024px+): 2-column grid (1fr 1fr), text left, mock right
+        - IdealLifeMock renders correctly at 375px without overflow
+        - Primary CTA "Start Planning — It's Free →" links to app.shtek.me with utm_campaign=ideal-life
+        - Ambient gradient background (warm, matches brand)
+        - ScrollInUp animation on scroll entry
+        - No horizontal overflow at any viewport
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1, 1.2, 1.3, 1.4 (tokens, Button component, grid, animations)"
+      
+      definition_of_done:
+        - IdealLifeMock renders correctly at mobile and desktop
+        - CTA links verified
+        - Section animates on scroll
+        - No overflow at 375px
+    
+    
+    - story_id: "3.1"
+      title: "Build Testimonials / Social Proof section"
+      complexity: M
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Build Testimonials section with 3-4 testimonial cards. Mobile: vertical stack. Desktop: 3-column grid. 
+        Each card: large decorative quote mark (2rem, accent, 0.3 opacity) + quote text + user name + city + 
+        optional avatar (40px circle) + optional ⭐ rating. Section header: "What early users are saying" with 
+        subtitle "Real feedback from beta users." Cards stagger-animate on scroll entry.
+      
+      acceptance_criteria:
+        - 3-4 testimonial cards minimum
+        - Mobile (375px): single column vertical stack
+        - Desktop (1024px+): 3-column grid with equal-height cards
+        - Each card: decorative quote mark (2rem, accent, 0.3 opacity), quote text, 
+          name + city (e.g., "Sarah, Belgrade"), optional avatar (40px circle, 2px border), 
+          optional ⭐ rating
+        - Cards animate in with stagger: 0.12s delay between each
+        - Card hover on desktop: translate(-4px) and border transitions to --border-hover
+        - Testimonial content: references Shtek-specific value (dual currency, Ideal Life feature, goal tracking)
+        - Attributions: honest (no fabricated names; use "Beta User, Belgrade" if needed)
+        - Section header: "What early users are saying" with subtitle "Real feedback from beta users."
+      
+      blockers:
+        - Q1: Real testimonial quotes available? If not, must approve placeholder approach 
+          ("Beta User, Belgrade") before starting.
+      
+      dependencies:
+        - "1.1, 1.2, 1.3, 1.4 (tokens, Card component, responsive grid, animations)"
+        - Real testimonial content (Rajko)
+      
+      definition_of_done:
+        - All testimonials render correctly at 375px and 1024px+
+        - Card animations stagger correctly
+        - Hover states work (desktop only)
+        - Attributions are honest (no fabricated profiles)
+    
+    
+    - story_id: "3.2"
+      title: "Build Pricing section (Free + Coming Soon Pro)"
+      complexity: M
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Build Pricing section with two tier cards: "Free Forever" (featured, accent border + glow, 
+        accent-surface background) and "Pro Plan — Coming Soon" (dimmed, reduced prominence). Free card 
+        lists all included features. CTA: primary on Free card → app.shtek.me, ghost "Join Waitlist →" 
+        on Pro card. Section headline: "Simple, honest pricing." Mobile: stacked single column, Free first.
+      
+      acceptance_criteria:
+        - Section headline: "Simple, honest pricing"
+        - Section subtitle: "Start free. No card required."
+        - Free tier card: featured variant with 1px --accent border, accent-glow shadow, 
+          --accent-surface background
+        - Free tier features listed: Dashboard & budgeting, Daily expense log, Goals (5 active), 
+          Ideal Life planner, EUR + RSD support, Google sign-in
+        - Free tier CTA: primary "Start for Free →" links to app.shtek.me with utm_campaign=pricing
+        - Pro tier card: "Coming Soon" badge in --info-dim/--info colors, standard card styling, 
+          reduced opacity or border treatment (less visually prominent)
+        - Pro tier features listed: Unlimited goals, Export to CSV, Multi-profile, Advanced analytics
+        - Pro tier CTA: ghost "Join Waitlist →" button
+        - Mobile (375px): cards stacked vertically, Free card first, CTA full-width
+        - Desktop (768px+): side-by-side 2-column layout
+        - "No credit card" message appears prominently (badge + subtitle)
+      
+      blockers:
+        - Q4: Pro tier pricing confirmed at €4.99/month? Must confirm before building feature list.
+      
+      dependencies:
+        - "1.1, 1.2, 1.3 (tokens, Card/Badge components, responsive grid)"
+      
+      definition_of_done:
+        - Both cards render correctly at all viewports
+        - Free card has correct visual prominence (border + glow + accent background)
+        - Both CTA links verified
+        - "No credit card" messaging prominent
+    
+    
+    - story_id: "3.3"
+      title: "Build FAQ accordion section (8+ items, FAQPage schema)"
+      complexity: M
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Build FAQ section using the shared Accordion component. Single column, max-width-text (760px), 
+        centered. 8 FAQ items minimum. Implement Schema.org FAQPage structured data as JSON-LD. One 
+        question open at a time. Section heading: "Frequently asked questions."
+      
+      faq_items:
+        - "Is it really free? Are there hidden costs?"
+        - "Is my financial data secure?"
+        - "Do I need to connect my bank account?"
+        - "What currencies does Shtek support?"
+        - "Can I use Shtek on my phone?"
+        - "How does the Ideal Life calculator work?"
+        - "Can I export my data?"
+        - "Who built Shtek and why?"
+      
+      acceptance_criteria:
+        - 8 FAQ items minimum with question + answer text
+        - Accordion behavior: click question → answer expands with smooth height animation; 
+          chevron rotates 180°; any open item collapses
+        - Keyboard accessible: Tab/Enter/Space to toggle, Escape to collapse
+        - aria-expanded on trigger button reflects state, aria-controls points to answer region
+        - Clickable area ≥48px tall on mobile
+        - Answer text legible at body size (1rem, text-muted)
+        - FAQPage JSON-LD schema in <script type="application/ld+json"> tag including all questions/answers
+        - Max-width-text layout (760px) centered
+        - Section heading: "Frequently asked questions."
+        - No horizontal scroll at any viewport
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1, 1.2 (tokens, Accordion component)"
+      
+      definition_of_done:
+        - All 8 accordion items toggle correctly
+        - Keyboard navigation works
+        - FAQPage schema validated with Google Rich Results Test
+        - No console errors
+        - Mobile testing: touch targets ≥48px
+  
+  definition_of_done:
+    - All 4 stories merged to main
+    - Ideal Life Promo section added to App.jsx (between HowItWorks and Testimonials)
+    - Testimonials, Pricing, FAQ sections integrated into page in canonical order
+    - All new sections responsive at 375px and 1024px+
+    - FAQPage schema generates valid JSON-LD
+    - Ready for Sprint 5
+
+---
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# SPRINT 5: New Sections - Part 2 (Epic 3: Stories 3.4–3.6 + Privacy)
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+sprint_5:
+  name: "New Sections — Part 2 (About, Privacy, Comparison)"
+  epic: "Epic 3"
+  goal: |
+    Complete the new sections with founder trust-building (About), security reassurance (Privacy), 
+    and competitive differentiation (Comparison). These sections remove final objections before 
+    visitor signs up.
+  
+  sprint_duration: "2 weeks"
+  velocity_target: 20 points (3S + 1M)
+  
+  stories:
+    
+    - story_id: "3.4"
+      title: "Build About / Founder Story section"
+      complexity: S
+      priority: P1
+      status: todo
+      owner: ""
+      
+      description: |
+        Build About section with founder story in personal, first-person tone. Text-focused layout, 
+        max-width-text (760px) centered. Subtle warm gradient background. Founder paragraph(s) 
+        referencing EUR/RSD frustration origin story. Optional 80px circle avatar. Footer row: 
+        "🇷🇸 Made in Serbia, 💚 Open to feedback, 📧 contact link". Single fadeInUp animation.
+      
+      acceptance_criteria:
+        - Section layout: max-width-text (760px) centered
+        - Background: subtle warm gradient wash (--secondary-surface)
+        - Founder name + "Founder" + "Belgrade, Serbia" attribution
+        - Optional founder photo: 80px circle with 2px border (if available)
+        - Copy: 2-3 paragraphs maximum, first-person tone, honest
+        - Copy references: EUR/RSD personal finance problem specifically
+        - Footer row: "🇷🇸 Made in Serbia, 💚 Open to feedback, 📧 contact link"
+        - Contact link behavior: opens mailto:hello@shtek.me (or approved email)
+        - Single fadeInUp animation on scroll entry
+        - Mobile (375px): centered text, legible at body size
+      
+      blockers:
+        - Q-email: Contact email confirmed as hello@shtek.me?
+        - Q3: Founder photo available? (Photo vs initials avatar)
+      
+      dependencies:
+        - "1.1, 1.2, 1.3, 1.4 (tokens, responsive layout, animations)"
+        - Founder-approved copy (Rajko)
+        - Optional founder photo (Rajko)
+      
+      definition_of_done:
+        - Founder copy approved and integrated
+        - Copy tone verified (personal, honest, no corporate voice)
+        - EUR/RSD problem referenced
+        - Contact link works
+        - Photo renders correctly (if provided)
+    
+    
+    - story_id: "3.5"
+      title: "Build Privacy / Security section"
+      complexity: S
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Build Privacy/Security section as an icon-driven reassurance block (not a full Privacy Policy). 
+        3-4 trust points: Google OAuth (no password), no data selling, delete anytime, secure storage 
+        (Supabase RLS). Plain language only. Visual: 2×2 grid on mobile, 4-column on desktop. Link to 
+        full Privacy Policy page. Tone: confidence stamp, not legal jargon.
+      
+      trust_points:
+        - "🔒 Google Sign-In — No password stored by Shtek, ever"
+        - "🚫 We don't sell your data — Your financial habits are yours"
+        - "🗑️ Delete anytime — Export or delete everything with one click"
+        - "🛡️ Secure storage — Data stored on Supabase with RLS policies"
+      
+      acceptance_criteria:
+        - 4 trust points with meaningful icons, heading, and description
+        - Each point ≤2 short sentences, plain language (no legal jargon)
+        - "Bank account" is NOT mentioned anywhere (Shtek doesn't connect to banks)
+        - Mobile (375px): 2×2 grid or vertical list layout
+        - Desktop (1024px+): 4-column horizontal layout
+        - "Privacy Policy" link at bottom navigates to full Privacy Policy page 
+          (opens in new tab with rel="noopener noreferrer")
+        - Background: visually distinct from adjacent sections (--bg-elevated or subtle border)
+        - Icons have aria-labels or visible text alternatives (not decorative-only)
+      
+      blockers:
+        - Q6: Privacy Policy URL (where does the link point?)
+      
+      dependencies:
+        - "1.1, 1.2, 1.3 (tokens, responsive grid)"
+      
+      definition_of_done:
+        - All 4 trust points render correctly at 375px and 1024px+
+        - Tone verified: confidence stamp, not legal document
+        - "Bank account" NOT mentioned
+        - Privacy Policy link works
+    
+    
+    - story_id: "3.6"
+      title: "Build Comparison section (vs spreadsheets)"
+      complexity: M
+      priority: P1
+      status: todo
+      owner: ""
+      
+      description: |
+        Build Comparison section comparing Shtek vs Spreadsheet vs Generic Budget App. Feature matrix: 
+        rows = features, columns = Shtek | Spreadsheet | Other App. Desktop: 3-column table/grid. Mobile: 
+        card-per-alternative stacked layout (NO horizontal table). Features compared: Dual currency (EUR/RSD), 
+        Goal templates, Ideal Life calculator, Mobile-friendly, Free, Data ownership, Manual entry 
+        (no bank link required). CTA: "Switch from Spreadsheets →" links to app.shtek.me. Tone: factual, 
+        not smug.
+      
+      comparison_features:
+        - Dual currency (EUR/RSD)
+        - Goal templates
+        - Ideal Life calculator
+        - Mobile-friendly design
+        - Free
+        - Data ownership
+        - No bank connection required
+      
+      acceptance_criteria:
+        - Desktop (1024px+): 3-column layout with rows of features, columns: Feature | Shtek | Other
+        - Shtek checkmarks: ✓ in --accent color
+        - Missing features: ✗ or dash in muted/dim color
+        - Mobile (375px): does NOT render as horizontal table (prevents scroll)
+        - Mobile alternative: card-per-alternative stacked layout or mobile-friendly visual format
+        - Feature list includes: Dual currency, Goal templates, Ideal Life calculator, Mobile-friendly, 
+          Free, Data ownership, No bank connection
+        - Shtek has ✓ for all 7 rows
+        - Tone: factual and neutral (no competitor name-calling or mockery)
+        - CTA "Switch from Spreadsheets →" links to app.shtek.me with utm_campaign=comparison
+        - No horizontal overflow at any viewport
+      
+      blockers: []
+      
+      dependencies:
+        - "1.1, 1.2, 1.3 (tokens, responsive grid)"
+        - UX spec for Comparison section (currently missing — see Readiness Report)
+      
+      definition_of_done:
+        - Desktop table displays correctly with all features and checkmarks
+        - Mobile layout is responsive and readable (no horizontal scroll)
+        - Tone verified: neutral, factual comparison
+        - CTA link verified
+        - All 7 features present and accurate
+  
+  definition_of_done:
+    - All 3 stories merged to main
+    - About, Privacy, Comparison sections integrated into page in canonical order
+    - All new sections responsive and complete
+    - Page now includes all 14 sections in canonical order
+    - Ready for Epic 4 (Performance & Polish)
+
+---
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# SPRINT 6: Performance & Polish (Epic 4)
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+sprint_6:
+  name: "Performance & Polish (Lighthouse, SEO, A11y, Cross-browser)"
+  epic: "Epic 4"
+  goal: |
+    Optimize assets, SEO, and accessibility to meet Lighthouse targets (≥90 mobile, ≥95 desktop), 
+    ensure WCAG 2.1 AA compliance, validate cross-browser functionality, and prepare for launch 
+    with comprehensive auditing.
+  
+  sprint_duration: "2 weeks"
+  velocity_target: 20 points (3S + 1M)
+  
+  stories:
+    
+    - story_id: "4.1"
+      title: "Image optimization (WebP, lazy loading, CLS prevention)"
+      complexity: S
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Audit all images added during redesign and optimize: convert raster assets to WebP with JPEG 
+        fallback via <picture> elements, add loading="lazy" to below-fold images, set explicit 
+        width/height attributes to prevent CLS.
+      
+      acceptance_criteria:
+        - All raster images (founder photo, etc.) convert to WebP with JPEG fallback
+        - Images below the fold have loading="lazy" attribute
+        - All images have explicit width and height attributes
+        - No CLS from images (CLS <0.1 contribution from images)
+        - All images have meaningful alt text (or alt="" if purely decorative)
+        - Network panel confirms images below fold are not loaded until scroll
+      
+      blockers: []
+      
+      dependencies:
+        - Epics 2 & 3 complete (all images in place)
+      
+      definition_of_done:
+        - All images optimized and tested
+        - No CLS regression
+        - Network waterfall verified
+    
+    
+    - story_id: "4.2"
+      title: "SEO (meta tags, structured data, sitemap, robots.txt)"
+      complexity: S
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Implement page-level SEO: update meta tags (title, description, OG tags, canonical), 
+        verify heading hierarchy (one H1, H2/H3 for sections), generate/validate sitemap.xml, 
+        create robots.txt, validate FAQPage JSON-LD schema from Story 3.3.
+      
+      acceptance_criteria:
+        - <title>: "Shtek — Personal Finance Planning App for Serbia & Balkans"
+        - <meta name="description">: 140-155 chars, mentions Serbia, EUR/RSD, free
+        - <meta property="og:title">, og:description, og:image all present
+        - <link rel="canonical" href="https://shtek.me/">
+        - Heading hierarchy: exactly one H1 (hero headline), H2 for section titles, H3 for card/item titles
+        - No skipped heading levels
+        - sitemap.xml present at /sitemap.xml (valid XML, includes shtek.me)
+        - robots.txt present at /robots.txt (allows crawlers, includes Sitemap: line)
+        - FAQPage JSON-LD schema from Story 3.3 validated with Google Rich Results Test (passes)
+        - Copyright year consistent: © 2026 Shtek (everywhere)
+      
+      blockers: []
+      
+      dependencies:
+        - Story 3.3 (FAQPage schema must exist)
+      
+      definition_of_done:
+        - Meta tags verified in browser source
+        - Heading hierarchy valid (tools: axe, Lighthouse)
+        - Sitemap and robots.txt deploy correctly
+        - FAQPage schema validated with Google
+    
+    
+    - story_id: "4.3"
+      title: "Lighthouse optimization (target ≥90 mobile, ≥95 desktop)"
+      complexity: M
+      priority: P0
+      status: todo
+      owner: ""
+      
+      description: |
+        Run Lighthouse CI against deployed/preview site and fix Performance, Accessibility, 
+        Best Practices, SEO issues blocking target scores. Compare against baseline captured in 
+        Story 0.1. Optimize LCP (hero headline must render <2.5s), eliminate CLS, ensure font-display: swap, 
+        fix render-blocking resources.
+      
+      acceptance_criteria:
+        - Lighthouse Mobile: Performance ≥90, Accessibility ≥90, Best Practices ≥90, SEO ≥90
+        - Lighthouse Desktop: Performance ≥95, Accessibility ≥90, Best Practices ≥90, SEO ≥95
+        - Core Web Vitals: LCP <2.5s mobile, CLS <0.1, FID/INP in "Good" range
+        - font-display: swap confirmed on DM Sans and DM Mono
+        - No render-blocking fonts (WOFF2 files preloaded or async)
+        - No render-blocking CSS files
+        - No console errors or warnings
+        - Post-launch deltas measurable (baseline from Story 0.1 available)
+      
+      blockers: []
+      
+      dependencies:
+        - Epics 2 & 3 complete, Stories 4.1 & 4.2 complete
+        - Story 0.1 baseline must exist
+      
+      definition_of_done:
+        - All Lighthouse targets met
+        - Core Web Vitals green
+        - No blocker issues
+    
+    
+    - story_id: "4.4"
+      title: "Cross-browser testing (Chrome, Firefox, Safari, iOS Safari, Android Chrome)"
+      complexity: M
+      priority: P1
+      status: todo
+      owner: ""
+      
+      description: |
+        Execute structured cross-browser test pass across all target browsers. Test matrix: Chrome 100+, 
+        Edge 100+, Firefox 100+, Safari 15+, iOS Safari 15+ (iPhone), Android Chrome 100+. Test: all 
+        section layouts, hamburger menu, FAQ accordion, feature tabs, animations, CTAs. Document results 
+        and fix critical failures.
+      
+      acceptance_criteria:
+        - Chrome 100+: all sections, interactions, CTAs functional
+        - Firefox 100+: hamburger menu, FAQ, feature tabs work; backdrop-filter degrades gracefully
+        - Safari 15+: all layouts, sticky navbar, smooth scroll work
+        - iOS Safari 15+: hamburger menu, touch targets ≥44px, no zoom on input, 
+          horizontal scroll components work with touch
+        - Android Chrome 100+: equivalent to iOS Safari expectations
+        - Cross-browser test matrix documented (tested browsers + tested interactions + results)
+        - No critical layout breaks or non-functional interactions
+        - Pixel-perfect parity not required — functional equivalence only
+      
+      blockers: []
+      
+      dependencies:
+        - Epics 2 & 3 complete (all sections in place)
+      
+      definition_of_done:
+        - Test matrix completed and documented
+        - No critical failures (functional issues marked as pass)
+        - Result report stored in BRAIN/testing/
+    
+    
+    - story_id: "4.5"
+      title: "Accessibility audit (WCAG 2.1 AA, keyboard nav, focus indicators, ARIA)"
+      complexity: M
+      priority: P1
+      status: todo
+      owner: ""
+      
+      description: |
+        Execute formal WCAG 2.1 AA accessibility audit using axe DevTools + manual keyboard navigation 
+        testing. Audit: color contrast, keyboard navigation order, focus visibility, ARIA labels, 
+        semantic HTML, screen reader output for key interactions (hamburger menu, FAQ accordion, feature 
+        tabs). Fix all critical (A) and major (AA) issues.
+      
+      acceptance_criteria:
+        - axe DevTools: zero critical violations, zero serious violations
+        - Moderate violations documented and assessed (not ignored)
+        - Keyboard navigation: all interactive elements reachable via Tab (logical order)
+        - Focus indicators: visible on every focused element (:focus-visible ring using --border-focus)
+        - Hamburger menu: opens with Enter/Space, closes with Escape, focus trapped when open
+        - FAQ accordion: opens/closes with Enter/Space, aria-expanded set correctly, aria-controls points to answer
+        - Feature tabs: keyboard navigable with Tab/Arrow/Enter
+        - Screen reader (NVDA/VoiceOver): section landmarks announced, AnimatedDashboard has aria-hidden="true"
+        - CTA buttons: descriptive text (not "Click Here")
+        - Text contrast: body text (--text-primary on --bg-base) ≥4.5:1; 
+          muted text (--text-muted on --bg-base) ≥4.5:1
+        - --text-dim: only on decorative/non-informative content
+        - prefers-reduced-motion: reduce disables all animations or keeps ≤100ms
+        - Skip link present and functional: <a href="#main-content" class="skip-link">
+      
+      blockers: []
+      
+      dependencies:
+        - Epics 2 & 3 complete (all sections in place)
+      
+      definition_of_done:
+        - axe audit results exported (zero critical/serious violations)
+        - Keyboard navigation test matrix completed
+        - Screen reader output verified
+        - Skip link tested
+        - Contrast ratios validated
+        - prefers-reduced-motion tested (OS setting + verified no animations)
+  
+  definition_of_done:
+    - All 5 stories merged to main
+    - Lighthouse targets achieved
+    - Cross-browser testing complete
+    - Accessibility audit passed
+    - Site ready for launch
+    - Post-launch metrics baseline captured and ready for comparison
+
+---
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# CRITICAL BLOCKERS & EXTERNAL DEPENDENCIES (Must Resolve)
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+blockers:
+  Q1:
+    question: "Real testimonial quotes available from beta users?"
+    impact: "Blocks Story 3.1 (Testimonials section)"
+    severity: P0
+    owner: Rajko
+    fallback: |
+      If real quotes unavailable, must explicitly approve placeholder approach 
+      ("Beta User, Belgrade") as acceptable before Story 3.1 begins.
+    resolution_target: "Before Sprint 4"
+  
+  Q2:
+    question: "Current user count for TrustBar stat (e.g., '500+ users')?"
+    impact: "Affects Story 2.3 TrustBar copy"
+    severity: P1
+    owner: Rajko
+    fallback: "Omit the stat if unknown"
+    resolution_target: "Before Sprint 2"
+  
+  Q3:
+    question: "Founder photo available for About section?"
+    impact: "Story 3.4 About section"
+    severity: P2
+    owner: Rajko
+    fallback: "Use 80px initials avatar instead"
+    resolution_target: "Before Sprint 5"
+  
+  Q4:
+    question: "Pro tier pricing confirmed at €4.99/month?"
+    impact: "Story 3.2 Pricing section feature list"
+    severity: P1
+    owner: Rajko
+    fallback: "Build with placeholder €4.99; update later"
+    resolution_target: "Before Sprint 4"
+  
+  Q6:
+    question: "Privacy Policy URL — where should the link in Story 3.5 point?"
+    impact: "Story 3.5 Privacy section + Story 2.8 Footer"
+    severity: P0
+    owner: Rajko (legal decision)
+    fallback: "Placeholder page or 'Coming soon' state"
+    resolution_target: "Before Sprint 5"
+  
+  Q-email:
+    question: "Contact email confirmed as hello@shtek.me?"
+    impact: "Story 3.4 About section contact link"
+    severity: P2
+    owner: Rajko
+    fallback: "Use placeholder; update later"
+    resolution_target: "Before Sprint 5"
+  
+  Q-order:
+    question: "CRITICAL: Canonical page section order — which document wins (PRD, UX, Architecture)?"
+    impact: "Affects App.jsx composition across ALL epics"
+    severity: P0
+    owner: Product (John)
+    resolution: |
+      Use this canonical order (from task instructions):
+      Navbar → Hero → TrustBar → Features → HowItWorks → IdealLifePromo → 
+      Testimonials → Comparison → Pricing → FAQ → About → Privacy → 
+      Manifesto → FinalCTA → Footer
+    resolution_target: "BEFORE Sprint 1"
+  
+  FR-08-missing-story:
+    question: "CRITICAL: FR-08 Ideal Life Promo has no story in original Epic 3"
+    impact: "P0 PRD requirement would be orphaned (no developer assigned)"
+    severity: P0
+    owner: Bob (Scrum Master)
+    resolution: "Created Story 3.0 during this sprint planning to assign ownership"
+    resolution_target: "Sprint 4"
+
+---
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# RECOMMENDED ACTIONS (Not blockers, but address to prevent friction)
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+recommendations:
+  
+  action_1:
+    title: "Create UX spec for Comparison section (currently missing)"
+    details: |
+      Story 3.6 will be built from PRD FR-06 alone (no UX guidance). Sally (UX) should create 
+      a brief wireframe/spec covering: mobile card layout vs desktop table, visual design, 
+      component reuse (Card component).
+    priority: P1
+    timing: "Before Sprint 4"
+  
+  action_2:
+    title: "Create or resolve Terms of Service / Privacy Policy pages"
+    details: |
+      Story 2.8 Footer and Story 3.5 Privacy both link to pages that may not exist. Either:
+      1. Create placeholder pages (simple HTML + CMS link), or
+      2. Change footer links to something that exists (e.g., "Contact" instead of "Terms of Service")
+      PRD Section 10 says full legal docs are out of scope, but stubs are needed to avoid broken links.
+    priority: P1
+    timing: "Before Sprint 3 (footer links go live)"
+  
+  action_3:
+    title: "Confirm hosting platform (Vercel/Netlify/Cloudflare/other)"
+    details: |
+      Architecture has cache/deployment strategy but no platform-specific config file. 
+      Needed: vercel.json (Vercel), netlify.toml (Netlify), _headers (Cloudflare), etc.
+    priority: P1
+    timing: "Before Sprint 6"
+  
+  action_4:
+    title: "Resolve copyright year (UX says 2025, all others say 2026)"
+    details: |
+      UX spec footer shows "© 2025 Shtek." All implementation docs say "© 2026 Shtek."
+      Standardize to 2026 across all documents.
+    priority: P2
+    timing: "Before Sprint 3 (footer release)"
+
+---
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# METRICS & SUCCESS CRITERIA
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+success_criteria:
+  
+  scope_completion:
+    target: "100% of Epic 1–4 stories shipped"
+    measurement: "All 24 stories (1.1–4.5 + 3.0) in DONE status"
+  
+  quality_gates:
+    lighthouse_mobile: "≥90 (Performance, Accessibility, Best Practices, SEO)"
+    lighthouse_desktop: "≥95 (Performance)"
+    wcag_compliance: "WCAG 2.1 AA — zero critical violations"
+    cross_browser: "All target browsers (Chrome, Firefox, Safari, iOS Safari, Android Chrome) functional"
+  
+  conversion_impact:
+    baseline_ctr: "Current CTA click-through rate (from Story 0.1)"
+    target_ctr: "CTA CTR +50% post-launch (PRD success metric)"
+    baseline_bounce: "Current bounce rate (from Story 0.1)"
+    target_bounce: "Bounce rate -20% post-launch (PRD success metric)"
+  
+  technical_debt:
+    css_migration: "100% of CSS converted to mobile-first (min-width, never max-width)"
+    component_extraction: "All shared components extracted to ui/ directory"
+    data_files: "All section content in data/ JS files (not inline)"
+
+---
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# RISK REGISTER
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+risks:
+  
+  risk_1:
+    title: "Mobile-first CSS migration risk"
+    description: |
+      Architecture Section 5.2 identifies this as "the most significant CSS change in the redesign."
+      Rewriting all existing CSS from desktop-first (max-width) to mobile-first (min-width) touches 
+      every component simultaneously. Risk: botched migration silently breaks desktop layouts while 
+      fixing mobile ones.
+    probability: "Medium"
+    impact: "High"
+    mitigation: |
+      - Add explicit regression test matrix to Sprint 1 Story 1.3 (responsive grid)
+      - Test all existing components at 375px, 768px, 1024px BEFORE moving to new sections
+      - Screenshot baseline (desktop) before migration, compare after
+    owner: "Dev team lead"
+  
+  risk_2:
+    title: "AnimatedDashboard mobile performance untested"
+    description: |
+      Dashboard is SVG-based (good for weight), but runs multiple CSS animations simultaneously.
+      On mobile with limited GPU, this could cause LCP > 2.5s or battery drain.
+    probability: "Medium"
+    impact: "Medium"
+    mitigation: |
+      - Story 2.2 must include explicit mobile performance test (real device or throttling)
+      - Monitor LCP specifically (hero headline LCP should not include animations)
+      - Consider disabling non-critical animations (shimmer, float) on mobile if needed
+    owner: "Story 2.2 assignee"
+  
+  risk_3:
+    title: "External content dependencies block Sprint 4"
+    description: |
+      Three stories depend on Rajko delivering content:
+      - Testimonials copy (Story 3.1 — P0, critical path)
+      - Founder photo + copy (Story 3.4)
+      - Pro tier confirmation (Story 3.2)
+      If Rajko isn't engaged early, multiple stories block simultaneously.
+    probability: "High"
+    impact: "High"
+    mitigation: |
+      - Engagement with Rajko BEFORE Sprint 4 begins
+      - Approved fallback content for testimonials ("Beta User, Belgrade")
+      - Placeholder Pro tier price (can update later)
+    owner: "Bob (Scrum Master) — escalate to Rajko"
+  
+  risk_4:
+    title: "FR-08 Ideal Life Promo discovered missing mid-sprint"
+    description: |
+      With no original story, this P0 PRD requirement could be missed entirely until QA/review.
+      Story 3.0 creates ownership, but coordination risk remains.
+    probability: "Low"
+    impact: "High"
+    mitigation: |
+      - Story 3.0 explicitly created in this sprint plan
+      - Clear placement in App.jsx (between HowItWorks and Testimonials)
+      - Tracked in this document as a critical story
+    owner: "Bob (Scrum Master)"
+  
+  risk_5:
+    title: "Comparison section has no UX spec"
+    description: |
+      Story 3.6 will be built from PRD table alone. No visual guidance on mobile layout 
+      (cards vs table) or desktop design. Developer improvises.
+    probability: "Medium"
+    impact: "Medium"
+    mitigation: |
+      - Request UX spec from Sally before Sprint 4
+      - Fallback: use Card component pattern for mobile, standard table on desktop
+    owner: "Sally (UX) + Story 3.6 assignee"
+
+---
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+# RESOLUTIONS FROM READINESS REPORT
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+readiness_resolutions:
+  
+  missing_ideal_life_story:
+    issue: "FR-08 (Ideal Life Promo) was orphaned — no story assigned in original Epic 3"
+    readiness_severity: "🔴 Critical"
+    resolution: "Created Story 3.0 in Sprint 4; explicit placement in App.jsx between HowItWorks and Testimonials"
+  
+  canonical_order_conflict:
+    issue: "Four documents had different page section orders (PRD, UX, Architecture, Epics)"
+    readiness_severity: "🟠 Major"
+    resolution: |
+      Canonical order established (per task instructions):
+      Navbar → Hero → TrustBar → Features → HowItWorks → IdealLifePromo → 
+      Testimonials → Comparison → Pricing → FAQ → About → Privacy → 
+      Manifesto → FinalCTA → Footer
+      This resolves conflicts by placing all sections and establishing insertion points.
+  
+  font_self_hosting_no_story:
+    issue: "Architecture ADR-05 (font self-hosting) had no epic story"
+    readiness_severity: "🟠 Major"
+    resolution: "Added to Story 1.1 as acceptance criteria (download WOFF2, add @font-face, remove CDN)"
+  
+  analytics_baseline_no_story:
+    issue: "PRD Q5 (P0) says capture baseline; no story owned this"
+    readiness_severity: "🟠 Major"
+    resolution: "Created Story 0.1 (pre-sprint baseline) — must run BEFORE Sprint 1 begins"
+  
+  og_image_no_story:
+    issue: "Architecture requires og-image.png but no story covers creation"
+    readiness_severity: "🟡 Minor"
+    resolution: "Added to Story 1.5 as placeholder creation; design TBD by marketing"
+  
+  new_hooks_no_story:
+    issue: "useMediaQuery and useScrollPosition hooks mentioned in Architecture but no story implements"
+    readiness_severity: "🟡 Minor"
+    resolution: "Added to Story 1.4 acceptance criteria (useMediaQuery and useScrollPosition hooks)"
+  
+  directory_structure_no_story:
+    issue: "Architecture Section 4.1 defines full directory structure; no story covers creation"
+    readiness_severity: "🟡 Minor"
+    resolution: "Added to Story 1.1 (directory creation) and Story 1.5 (data file scaffolding)"
+  
+  cta_url_utility_no_story:
+    issue: "Architecture defines ctaUrl(section) pattern in utils/links.js; no story covers it"
+    readiness_severity: "🟡 Minor"
+    resolution: "Added to Story 1.5 (utils/links.js creation with ctaUrl function)"
+
+---
+metadata:
+  total_stories: 24
+  total_story_points: 118 (approx: 4S + 1M per sprint * 6 sprints)
+  sprints: 6
+  sprints_duration: "12 weeks (3 months)"
+  document_version: "1.0"
+  created_by: "Bob (Scrum Master)"
+  created_date: "2026-03-25"
+  approval_status: "Ready for product review"
+  last_updated: "2026-03-25 22:11 GMT+1"
+
+# END OF SPRINT STATUS & ROADMAP

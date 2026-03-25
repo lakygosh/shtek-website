@@ -1,0 +1,76 @@
+/* ─── TrustBar Section ─── */
+/* Mobile-first */
+
+.trust-bar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-10) 0;
+  background: rgba(23, 20, 18, 0.5);
+}
+
+.trust-bar__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.trust-bar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.trust-bar__icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+}
+
+.trust-bar__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.trust-bar__value {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.trust-bar__label {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ─── Tablet (768px) ─── */
+@media (min-width: 768px) {
+  .trust-bar {
+    padding: var(--space-12) 0;
+  }
+
+  .trust-bar__inner {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-12);
+  }
+
+  .trust-bar__value {
+    font-size: 1.2rem;
+  }
+}
+
+/* ─── Desktop (1024px) ─── */
+@media (min-width: 1024px) {
+  .trust-bar__inner {
+    gap: var(--space-16);
+  }
+}

@@ -1,0 +1,45 @@
+/* ─── Card Component ─── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: var(--space-6);
+  }
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+}
+
+/* Accent border variant */
+.card--accent-border {
+  border-left: 3px solid var(--accent);
+}
+
+/* Featured card (pricing) */
+.card--featured {
+  border-color: var(--accent);
+  background: var(--accent-surface);
+  box-shadow:
+    0 0 0 1px var(--accent),
+    0 0 20px rgba(143, 185, 150, 0.15),
+    inset 0 0 20px rgba(143, 185, 150, 0.03);
+}
+
+/* Testimonial variant */
+.card--testimonial:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+}
+
+/* Stat variant (trust bar) */
+.card--stat {
+  background: rgba(255, 255, 255, 0.03);
+  padding: var(--space-3);
+}

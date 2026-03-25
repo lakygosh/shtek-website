@@ -1,0 +1,39 @@
+/* ─── Section Component ─── */
+.section {
+  padding: var(--space-16) var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: var(--space-20) var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 100px var(--space-10);
+  }
+}
+
+/* Dense variant (trust bar, tight sections) */
+.section--dense {
+  padding: var(--space-10) var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .section--dense {
+    padding: var(--space-12) var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section--dense {
+    padding: var(--space-12) var(--space-10);
+  }
+}
+
+/* Wide variant (edge-to-edge background) */
+.section--wide {
+  padding-left: 0;
+  padding-right: 0;
+}
