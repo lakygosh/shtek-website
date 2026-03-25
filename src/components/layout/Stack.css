@@ -25,9 +25,13 @@
 .stack--gap-2xl { gap: var(--space-16); }
 .stack--gap-none { gap: 0; }
 
-/* Responsive: horizontal → vertical on mobile */
-@media (max-width: 767px) {
+/* Responsive: vertical (column) by default on mobile, horizontal on wider screens */
+.stack--responsive {
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
   .stack--responsive {
-    flex-direction: column;
+    flex-direction: row;
   }
 }

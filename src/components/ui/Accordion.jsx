@@ -62,13 +62,50 @@ export default function Accordion({
   className = '',
 }) {
   const [openIndex, setOpenIndex] = useState(-1)
+  const accordionRef = useRef(null)
 
   const handleToggle = useCallback((index) => {
     setOpenIndex((prev) => (prev === index ? -1 : index))
   }, [])
 
+  // Keyboard navigation: Arrow Up/Down, Home, End per WAI-ARIA Accordion pattern
+  const handleKeyDown = useCallback((e) => {
+    const triggers = accordionRef.current?.querySelectorAll('.accordion-item__trigger')
+    if (!triggers?.length) return
+
+    const currentIndex = Array.from(triggers).indexOf(document.activeElement)
+    if (currentIndex === -1) return
+
+    let targetIndex = -1
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault()
+        targetIndex = (currentIndex + 1) % triggers.length
+        break
+      case 'ArrowUp':
+        e.preventDefault()
+        targetIndex = (currentIndex - 1 + triggers.length) % triggers.length
+        break
+      case 'Home':
+        e.preventDefault()
+        targetIndex = 0
+        break
+      case 'End':
+        e.preventDefault()
+        targetIndex = triggers.length - 1
+        break
+      default:
+        return
+    }
+    triggers[targetIndex]?.focus()
+  }, [])
+
   return (
-    <div className={`accordion ${className}`}>
+    <div
+      ref={accordionRef}
+      className={`accordion ${className}`}
+      onKeyDown={handleKeyDown}
+    >
       {items.map((item, index) => (
         <AccordionItem
           key={index}

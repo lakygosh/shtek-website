@@ -49,7 +49,7 @@ function DailyLogMock() {
     <div className="fmock fmock-daily">
       <div className="fmock-daily-top">
         <div className="fmock-mini-donut">
-          <svg width="90" height="90" viewBox="0 0 90 90">
+          <svg width="90" height="90" viewBox="0 0 90 90" aria-hidden="true">
             <circle cx="45" cy="45" r="34" fill="none" stroke="#8FB996" strokeWidth="10" strokeDasharray="80 214" transform="rotate(-90 45 45)" />
             <circle cx="45" cy="45" r="34" fill="none" stroke="#B8C5E3" strokeWidth="10" strokeDasharray="50 214" transform="rotate(44 45 45)" />
             <circle cx="45" cy="45" r="34" fill="none" stroke="#D49A9A" strokeWidth="10" strokeDasharray="30 214" transform="rotate(128 45 45)" />

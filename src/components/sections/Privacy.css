@@ -1,0 +1,61 @@
+/* ─── Privacy Section ─── */
+
+.privacy {
+  padding: var(--space-16) 0;
+}
+
+.privacy__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-10);
+}
+
+.privacy__card {
+  text-align: center;
+}
+
+.privacy__icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: var(--space-3);
+}
+
+.privacy__title {
+  font-size: var(--text-h3);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.privacy__desc {
+  font-size: var(--text-body-sm);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ─── Tablet (768px) ─── */
+@media (min-width: 768px) {
+  .privacy {
+    padding: var(--space-20) 0;
+  }
+
+  .privacy__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+  }
+
+  .privacy__card {
+    text-align: left;
+  }
+}
+
+/* ─── Desktop (1024px) ─── */
+@media (min-width: 1024px) {
+  .privacy {
+    padding: 100px 0;
+  }
+
+  .privacy__grid {
+    gap: var(--space-6);
+  }
+}

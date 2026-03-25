@@ -101,8 +101,13 @@
   outline-offset: 2px;
 }
 
-@media (max-width: 479px) {
+/* Mobile-first: full-mobile is full-width by default, reverts on wider screens */
+.btn--full-mobile {
+  width: 100%;
+}
+
+@media (min-width: 480px) {
   .btn--full-mobile {
-    width: 100%;
+    width: auto;
   }
 }

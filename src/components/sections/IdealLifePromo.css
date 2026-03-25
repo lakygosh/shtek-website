@@ -1,0 +1,166 @@
+/* ─── IdealLife Promo Section ─── */
+
+.ideal-promo__content {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .ideal-promo__content {
+    grid-template-columns: 1.2fr 1fr;
+    align-items: start;
+  }
+}
+
+/* Bars Card */
+.ideal-promo__bars-card {
+  padding: var(--space-5) !important;
+}
+
+.ideal-promo__bars-title {
+  font-size: var(--text-body);
+  color: var(--text-muted);
+  margin-bottom: var(--space-4);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.75rem;
+}
+
+.ideal-promo__bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Mobile-first: narrow grid is default */
+.ideal-promo__bar-row {
+  display: grid;
+  grid-template-columns: 1.5rem 4rem 1fr 3rem;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+@media (min-width: 480px) {
+  .ideal-promo__bar-row {
+    grid-template-columns: 1.8rem 5rem 1fr 3.5rem;
+  }
+}
+
+.ideal-promo__bar-icon {
+  font-size: 1rem;
+}
+
+.ideal-promo__bar-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.ideal-promo__bar-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.ideal-promo__bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.visible .ideal-promo__bar-fill {
+  animation: barGrow 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.ideal-promo__bar-value {
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  color: var(--text);
+  text-align: right;
+}
+
+/* Summary Cards */
+.ideal-promo__summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ideal-promo__stat-card {
+  text-align: center;
+  padding: var(--space-4) !important;
+}
+
+.ideal-promo__stat-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.ideal-promo__stat-value {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text);
+}
+
+.ideal-promo__stat-value small {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+.ideal-promo__stat-value--info {
+  color: var(--info);
+}
+
+.ideal-promo__stat-value--error {
+  color: var(--error);
+}
+
+/* Gap bar */
+.ideal-promo__gap-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  margin-top: var(--space-3);
+  overflow: hidden;
+}
+
+.ideal-promo__gap-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--radius-full);
+  transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ideal-promo__gap-text {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: var(--space-2);
+}
+
+.ideal-promo__gap-text strong {
+  color: var(--secondary);
+}
+
+/* CTA */
+.ideal-promo__cta {
+  margin-top: var(--space-2);
+  align-self: center;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .ideal-promo__cta {
+    width: auto;
+  }
+}

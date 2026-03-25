@@ -1,0 +1,94 @@
+/* ─── Pricing Section ─── */
+
+.pricing__grid {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .pricing__grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.pricing__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.pricing__card-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.pricing__price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1;
+}
+
+.pricing__price--dimmed {
+  color: var(--text-muted);
+}
+
+.pricing__period {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-dim);
+}
+
+.pricing__desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Features list */
+.pricing__features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.pricing__feature {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.pricing__feature svg {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.pricing__feature--dimmed {
+  color: var(--text-muted);
+}
+
+.pricing__feature--dimmed svg {
+  color: var(--text-dim);
+}
+
+/* Pro card dimming */
+.pricing__card--pro {
+  opacity: 0.65;
+  transition: opacity var(--transition);
+}
+
+.pricing__card--pro:hover {
+  opacity: 0.85;
+}

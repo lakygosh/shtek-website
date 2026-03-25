@@ -77,10 +77,15 @@ export default function Navbar() {
     return () => document.removeEventListener('keydown', handleKey)
   }, [menuOpen])
 
-  // Lock body scroll when mobile menu open
+  // Lock body scroll when mobile menu open & focus first item
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = 'hidden'
+      // Move focus to first menu item for accessibility
+      requestAnimationFrame(() => {
+        const firstLink = menuRef.current?.querySelector('button, a')
+        firstLink?.focus()
+      })
     } else {
       document.body.style.overflow = ''
     }
@@ -123,12 +128,14 @@ export default function Navbar() {
           </a>
 
           {/* Desktop nav links */}
-          <div className="navbar__links">
+          <div className="navbar__links" role="list">
             {NAV_LINKS.map((link) => (
               <button
                 key={link.href}
+                role="listitem"
                 className={`navbar__link ${activeSection === link.href ? 'navbar__link--active' : ''}`}
                 onClick={() => scrollTo(link.href)}
+                aria-current={activeSection === link.href ? 'true' : undefined}
               >
                 {link.label}
               </button>
@@ -178,6 +185,7 @@ export default function Navbar() {
               key={link.href}
               className={`navbar__mobile-link ${activeSection === link.href ? 'navbar__mobile-link--active' : ''}`}
               onClick={() => scrollTo(link.href)}
+              aria-current={activeSection === link.href ? 'true' : undefined}
             >
               {link.label}
             </button>

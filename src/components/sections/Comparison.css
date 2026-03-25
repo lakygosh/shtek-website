@@ -1,0 +1,130 @@
+/* ─── Comparison Section ─── */
+
+.comparison {
+  padding: var(--space-16) 0;
+}
+
+.comparison__scroll {
+  margin-top: var(--space-10);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.comparison__table {
+  width: 100%;
+  min-width: 540px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+/* Headers */
+.comparison__feature-header,
+.comparison__col-header {
+  padding: var(--space-4) var(--space-4);
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.comparison__feature-header {
+  text-align: left;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.comparison__col-header {
+  color: var(--text);
+}
+
+.comparison__col-header--highlight {
+  background: var(--accent-dim);
+  color: var(--accent);
+  position: relative;
+}
+
+.comparison__col-header--highlight::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 3px 3px 0 0;
+}
+
+.comparison__check {
+  font-weight: 700;
+}
+
+/* Rows */
+.comparison__row {
+  transition: background var(--transition);
+}
+
+.comparison__row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.comparison__feature {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-body-sm);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.comparison__cell {
+  padding: var(--space-3) var(--space-4);
+  text-align: center;
+  font-size: var(--text-body-sm);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.comparison__cell--highlight {
+  background: var(--accent-dim);
+}
+
+/* Remove bottom border on last row */
+.comparison__row:last-child .comparison__feature,
+.comparison__row:last-child .comparison__cell {
+  border-bottom: none;
+}
+
+/* ─── Tablet (768px) ─── */
+@media (min-width: 768px) {
+  .comparison {
+    padding: var(--space-20) 0;
+  }
+
+  .comparison__scroll {
+    overflow-x: visible;
+  }
+
+  .comparison__feature-header,
+  .comparison__col-header {
+    padding: var(--space-5) var(--space-5);
+  }
+
+  .comparison__feature,
+  .comparison__cell {
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--text-body);
+  }
+}
+
+/* ─── Desktop (1024px) ─── */
+@media (min-width: 1024px) {
+  .comparison {
+    padding: 100px 0;
+  }
+}
