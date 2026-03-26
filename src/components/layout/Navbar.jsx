@@ -5,6 +5,9 @@ import './Navbar.css'
 const NAV_LINKS = [
   { label: 'Features', href: 'features' },
   { label: 'How It Works', href: 'how-it-works' },
+  { label: 'Pricing', href: 'pricing' },
+  { label: 'FAQ', href: 'faq' },
+  { label: 'About', href: 'about' },
 ]
 
 const CTA_URL = 'https://app.shtek.me/?utm_source=landing&utm_medium=nav&utm_campaign=navbar'
@@ -25,7 +28,7 @@ export default function Navbar() {
 
   // Active section tracking via Intersection Observer
   useEffect(() => {
-    const sectionIds = ['features', 'how-it-works']
+    const sectionIds = ['features', 'how-it-works', 'pricing', 'faq', 'about']
     const observers = []
 
     sectionIds.forEach((id) => {
