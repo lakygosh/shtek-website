@@ -1,4 +1,3 @@
-import AnimatedDashboard from '../mocks/AnimatedDashboard'
 import Button from '../ui/Button'
 import Badge from '../ui/Badge'
 import './Hero.css'
@@ -10,6 +9,87 @@ const TRUST_ITEMS = [
   { icon: '🔒', text: 'No tracking' },
   { icon: '💱', text: 'EUR & RSD' },
 ]
+
+function HeroDashboardMock() {
+  const stats = [
+    { label: 'Net Income', value: '€3,200', color: 'var(--accent)' },
+    { label: 'Expenses', value: '€2,150', color: 'var(--secondary)' },
+    { label: 'Surplus', value: '€1,050', color: 'var(--accent)' },
+  ]
+
+  const bars = [
+    { label: 'Housing', pct: 35, color: '#D4C5A9' },
+    { label: 'Food', pct: 20, color: '#8FB996' },
+    { label: 'Transport', pct: 15, color: '#B8C5E3' },
+    { label: 'Utilities', pct: 12, color: '#C9B8D9' },
+    { label: 'Fun', pct: 10, color: '#D49A9A' },
+  ]
+
+  const goals = [
+    { icon: '🏠', name: 'House Fund', pct: 45 },
+    { icon: '🚗', name: 'New Car', pct: 72 },
+    { icon: '🛟', name: 'Safety Net', pct: 88 },
+  ]
+
+  return (
+    <div className="hero-mock">
+      {/* Header */}
+      <div className="hero-mock__header">
+        <span className="hero-mock__logo">💰</span>
+        <span className="hero-mock__title">Money Planner</span>
+        <span className="hero-mock__dot" />
+      </div>
+
+      {/* Stats row */}
+      <div className="hero-mock__stats">
+        {stats.map((s, i) => (
+          <div key={i} className="hero-mock__stat">
+            <span className="hero-mock__stat-label">{s.label}</span>
+            <span className="hero-mock__stat-value" style={{ color: s.color }}>{s.value}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Savings rate */}
+      <div className="hero-mock__savings">
+        <div className="hero-mock__savings-row">
+          <span>Savings Rate</span>
+          <span style={{ color: 'var(--accent)', fontWeight: 600 }}>33%</span>
+        </div>
+        <div className="hero-mock__track">
+          <div className="hero-mock__fill" style={{ width: '33%' }} />
+        </div>
+      </div>
+
+      {/* Category bars */}
+      <div className="hero-mock__categories">
+        {bars.map((b, i) => (
+          <div key={i} className="hero-mock__cat-row">
+            <span className="hero-mock__cat-name">{b.label}</span>
+            <div className="hero-mock__cat-track">
+              <div className="hero-mock__cat-fill" style={{ width: `${b.pct}%`, background: b.color }} />
+            </div>
+            <span className="hero-mock__cat-pct">{b.pct}%</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Goals */}
+      <div className="hero-mock__goals">
+        {goals.map((g, i) => (
+          <div key={i} className="hero-mock__goal">
+            <span>{g.icon}</span>
+            <span className="hero-mock__goal-name">{g.name}</span>
+            <div className="hero-mock__goal-track">
+              <div className="hero-mock__goal-fill" style={{ width: `${g.pct}%`, background: g.pct >= 80 ? 'var(--accent)' : 'var(--info)' }} />
+            </div>
+            <span className="hero-mock__goal-pct">{g.pct}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function Hero() {
   const scrollToHowItWorks = () => {
@@ -66,8 +146,8 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hero__visual">
-          <AnimatedDashboard />
+        <div className="hero__visual" aria-hidden="true">
+          <HeroDashboardMock />
         </div>
 
         <div className="hero__trust">
