@@ -15,7 +15,6 @@ import TrustBar from './components/sections/TrustBar'
 import Features from './components/sections/Features'
 import HowItWorks from './components/sections/HowItWorks'
 import IdealLifePromo from './components/sections/IdealLifePromo'
-import Testimonials from './components/sections/Testimonials'
 import Comparison from './components/sections/Comparison'
 import Pricing from './components/sections/Pricing'
 import FAQ from './components/sections/FAQ'
@@ -39,7 +38,6 @@ export default function App() {
         <Features />
         <HowItWorks />
         <IdealLifePromo />
-        <Testimonials />
         <Comparison />
         <Pricing />
         <FAQ />

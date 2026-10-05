@@ -5,7 +5,7 @@ import './Hero.css'
 const CTA_URL = 'https://app.shtek.me/?utm_source=landing&utm_medium=cta&utm_campaign=hero'
 
 const TRUST_ITEMS = [
-  { icon: '👥', text: '500+ users' },
+  { icon: '🎯', text: '10 goal templates' },
   { icon: '🔒', text: 'No tracking' },
   { icon: '💱', text: 'EUR & RSD' },
 ]

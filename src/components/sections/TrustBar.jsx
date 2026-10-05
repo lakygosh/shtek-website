@@ -5,21 +5,20 @@ import './TrustBar.css'
 
 export default function TrustBar() {
   const [ref, isVisible] = useIntersectionObserver({ threshold: 0.15 })
-  const users = useCountUp(500, 800, isVisible)
+  const templates = useCountUp(10, 800, isVisible)
   const currencies = useCountUp(2, 600, isVisible)
 
   const items = [
     {
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          <circle cx="12" cy="12" r="10" />
+          <circle cx="12" cy="12" r="6" />
+          <circle cx="12" cy="12" r="2" />
         </svg>
       ),
-      value: `${users}+`,
-      label: 'Beta Users',
+      value: `${templates}`,
+      label: 'Goal Templates',
     },
     {
       icon: (
@@ -55,7 +54,7 @@ export default function TrustBar() {
     <section
       ref={ref}
       className={`trust-bar ${isVisible ? 'visible' : ''}`}
-      aria-label="Social proof"
+      aria-label="Highlights"
     >
       <Container>
         <div className="trust-bar__inner">

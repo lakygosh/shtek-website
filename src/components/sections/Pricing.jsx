@@ -13,6 +13,7 @@ const FREE_FEATURES = [
   'Savings goals with templates',
   'Ideal Life calculator',
   'Dual currency (EUR & RSD)',
+  'Custom categories',
   'Dark mode by default',
   'No ads, ever',
 ]
@@ -20,7 +21,6 @@ const FREE_FEATURES = [
 const PRO_FEATURES = [
   'Everything in Free',
   'CSV & PDF export',
-  'Custom categories',
   'Advanced analytics',
   'Priority support',
   'Multi-device sync',

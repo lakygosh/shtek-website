@@ -19,7 +19,7 @@ Planning followed a spec-first process. Product brief, PRD, UX design, architect
 
 ## Key Features
 
-- **13 content sections** in a fixed order: Hero, Trust Bar, Features, How It Works, Ideal Life promo, Testimonials, Comparison, Pricing, FAQ, About, Privacy, Manifesto, Final CTA.
+- **12 content sections** in a fixed order: Hero, Trust Bar, Features, How It Works, Ideal Life promo, Comparison, Pricing, FAQ, About, Privacy, Manifesto, Final CTA.
 - **Feature tour with tabs** for the app's five areas: Dashboard, Daily Log, Budget, Goals, Ideal Life.
 - **Sticky navbar** that changes style once you scroll, highlights the section you are reading, scrolls smoothly to sections, and opens a mobile menu that locks page scrolling.
 - **FAQ accordion** and a comparison against spreadsheets and other apps.

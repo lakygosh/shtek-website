@@ -15,7 +15,7 @@ const FAQ_ITEMS = [
   },
   {
     question: 'What currencies are supported?',
-    answer: 'Currently we support EUR and RSD (Serbian Dinar) with real-time conversion. More currencies are on the roadmap based on user demand.',
+    answer: 'Currently we support EUR and RSD (Serbian Dinar) with built-in conversion between them. More currencies are on the roadmap based on user demand.',
   },
   {
     question: 'Can I use it on my phone?',
@@ -31,7 +31,7 @@ const FAQ_ITEMS = [
   },
   {
     question: 'Will there be a Pro plan?',
-    answer: "We're considering a Pro plan with advanced features like CSV export, custom categories, and multi-device sync. The free plan will always remain fully functional.",
+    answer: "We're considering a Pro plan with advanced features like CSV export, advanced analytics, and multi-device sync. The free plan will always remain fully functional.",
   },
   {
     question: 'Can I export my data?',
